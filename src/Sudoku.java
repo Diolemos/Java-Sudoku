@@ -1,8 +1,12 @@
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Font;
+import java.awt.GridLayout;
 import javax.swing.*;
+import javax.swing.border.MatteBorder;
 
 public class Sudoku {
+    
     int boardWidth = 600;
     int boardHeight= 650;
 
@@ -50,8 +54,36 @@ public class Sudoku {
         textPanel.add(textLabel);
         frame.add(textPanel, BorderLayout.NORTH);
 
+        boardPanel.setLayout(new GridLayout(9,9));
+        setupTiles();
+        frame.add(boardPanel,BorderLayout.CENTER);
+
         frame.revalidate();
         frame.repaint();
         
+        
     }
+    void setupTiles() {
+    for (int row = 0; row < 9; row++) {
+        for (int column = 0; column < 9; column++) {
+            Tile tile = new Tile(row, column);
+
+            char tileChar = puzzle[row].charAt(column);
+            if (tileChar != '-') {
+                tile.setText(String.valueOf(tileChar));
+                tile.setEnabled(false); // Optional: lock original values
+            }
+
+            // Define border thickness for 3x3 grid
+            int top = (row % 3 == 0) ? 2 : 1;
+            int left = (column % 3 == 0) ? 2 : 1;
+            int bottom = (row == 8) ? 2 : 1;
+            int right = (column == 8) ? 2 : 1;
+
+            tile.setBorder(new MatteBorder(top, left, bottom, right, Color.BLUE));
+
+            boardPanel.add(tile);
+        }
+    }
+}
 }
