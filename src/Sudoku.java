@@ -67,21 +67,25 @@ public class Sudoku {
     for (int row = 0; row < 9; row++) {
         for (int column = 0; column < 9; column++) {
             Tile tile = new Tile(row, column);
-
             char tileChar = puzzle[row].charAt(column);
+
             if (tileChar != '-') {
                 tile.setText(String.valueOf(tileChar));
-                tile.setEnabled(false); // Optional: lock original values
+                tile.setEditable(false);
+                tile.setBackground(Color.LIGHT_GRAY);
+                tile.setForeground(Color.BLACK);
+            } else {
+                String correct = String.valueOf(solution[row].charAt(column));
+                tile.makeEditable(correct);
             }
 
-            // Define border thickness for 3x3 grid
+            // Border setup
             int top = (row % 3 == 0) ? 2 : 1;
             int left = (column % 3 == 0) ? 2 : 1;
             int bottom = (row == 8) ? 2 : 1;
             int right = (column == 8) ? 2 : 1;
 
-            tile.setBorder(new MatteBorder(top, left, bottom, right, Color.BLUE));
-
+            tile.setBorder(new MatteBorder(top, left, bottom, right, Color.GRAY));
             boardPanel.add(tile);
         }
     }
