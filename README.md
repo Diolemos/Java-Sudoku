@@ -4,4 +4,4 @@
 ![Sudoku Game Screenshot](src/images/Screenshot.png)
 
 The Game works with only one puzzle and solution. More to be added!</br>
-I'll be sketching a generator algoritm to use the loadGames method. 
+I'll be sketching a generator algoritm to use with the loadGames method. 
