@@ -1,6 +1,5 @@
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Font;
 import java.awt.GridLayout;
 import javax.swing.*;
 import javax.swing.border.MatteBorder;
@@ -35,8 +34,8 @@ public class Sudoku {
     };
 
     JFrame frame = new JFrame("Sudoku");
-    JLabel textLabel = new JLabel();
-    JPanel textPanel = new JPanel();
+    // JLabel textLabel = new JLabel();
+    // JPanel textPanel = new JPanel();
     JPanel boardPanel = new JPanel();
 
     Sudoku(){
@@ -47,12 +46,12 @@ public class Sudoku {
         frame.setLocationRelativeTo(null);
         frame.setLayout(new BorderLayout()); 
 
-        textLabel.setFont(new Font("Arial", Font.BOLD,30));
-        textLabel.setHorizontalAlignment(JLabel.CENTER);
-        textLabel.setText(("Sudoku: 0"));
+        // textLabel.setFont(new Font("Arial", Font.BOLD,30));
+        // textLabel.setHorizontalAlignment(JLabel.CENTER);
+        // textLabel.setText(("Sudoku: 0"));
 
-        textPanel.add(textLabel);
-        frame.add(textPanel, BorderLayout.NORTH);
+        // textPanel.add(textLabel);
+        // frame.add(textPanel, BorderLayout.NORTH);
 
         boardPanel.setLayout(new GridLayout(9,9));
         setupTiles();
@@ -80,12 +79,12 @@ public class Sudoku {
             }
 
             // Border setup
-            int top = (row % 3 == 0) ? 2 : 1;
-            int left = (column % 3 == 0) ? 2 : 1;
-            int bottom = (row == 8) ? 2 : 1;
-            int right = (column == 8) ? 2 : 1;
+            int top = (row % 3 == 0) ? 3 : 1;
+            int left = (column % 3 == 0) ? 3 : 1;
+            int bottom = (row == 8) ? 3 : 1;
+            int right = (column == 8) ? 3 : 1;
 
-            tile.setBorder(new MatteBorder(top, left, bottom, right, Color.GRAY));
+            tile.setBorder(new MatteBorder(top, left, bottom, right, Color.BLACK));
             boardPanel.add(tile);
         }
     }

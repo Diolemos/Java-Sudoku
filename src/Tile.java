@@ -31,15 +31,17 @@ public class Tile extends JTextField {
     }
 
     private void validateInput(String correctAnswer) {
-        String input = getText().trim();
+         String input = getText().trim();
 
-        if (!input.matches("[1-9]")) {
-            setBackground(Color.PINK); // Invalid
-        } else if (input.equals(correctAnswer)) {
-            setBackground(new Color(144, 238, 144)); // Correct = light green
-            setEditable(false); // Optional: lock after correct
-        } else {
-            setBackground(Color.PINK); // Incorrect
-        }
+    if (input.isEmpty()) {
+        setBackground(Color.WHITE); // Neutral background
+    } else if (!input.matches("[1-9]")) {
+        setBackground(Color.PINK); // Invalid (non-numeric or 0)
+    } else if (input.equals(correctAnswer)) {
+        setBackground(new Color(144, 238, 144)); // Correct = light green
+        setEditable(false); // Optional: lock after correct
+    } else {
+        setBackground(Color.PINK); // Wrong number
     }
+}
 }
