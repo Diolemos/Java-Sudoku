@@ -37,7 +37,10 @@ public class Sudoku {
     // JLabel textLabel = new JLabel();
     // JPanel textPanel = new JPanel();
     JPanel boardPanel = new JPanel();
+    JButton resetButton = new JButton("Reset");
+    JButton newGameButton = new JButton("New Game");
 
+    Tile[][] tiles = new Tile[9][9];
     Sudoku(){
         frame.setVisible(true);
         frame.setSize(boardWidth, boardHeight);
@@ -54,39 +57,65 @@ public class Sudoku {
         // frame.add(textPanel, BorderLayout.NORTH);
 
         boardPanel.setLayout(new GridLayout(9,9));
-        setupTiles();
+        loadGame(puzzle, solution);
         frame.add(boardPanel,BorderLayout.CENTER);
+        JPanel buttonPanel = new JPanel();
 
+resetButton.addActionListener(e -> {
+    int option = JOptionPane.showConfirmDialog(frame, "Reset this puzzle?", "Confirm Reset", JOptionPane.YES_NO_OPTION);
+    if (option == JOptionPane.YES_OPTION) {
+        loadGame(puzzle, solution); // Reload the same puzzle
+    }
+});
+
+newGameButton.addActionListener(e -> {
+    int option = JOptionPane.showConfirmDialog(frame, "Start a new game?", "Confirm New Game", JOptionPane.YES_NO_OPTION);
+    if (option == JOptionPane.YES_OPTION) {
+        // TODO: Replace with random puzzle logic later
+        loadGame(puzzle, solution); // Reuse current for now
+    }
+});
+
+buttonPanel.add(resetButton);
+buttonPanel.add(newGameButton);
+frame.add(buttonPanel, BorderLayout.SOUTH);
         frame.revalidate();
         frame.repaint();
         
         
     }
-    void setupTiles() {
-    for (int row = 0; row < 9; row++) {
-        for (int column = 0; column < 9; column++) {
-            Tile tile = new Tile(row, column);
-            char tileChar = puzzle[row].charAt(column);
+    
+void loadGame(String[] puzzle, String[] solution) {
+    boardPanel.removeAll(); // Clear old tiles
 
-            if (tileChar != '-') {
-                tile.setText(String.valueOf(tileChar));
+    for (int row = 0; row < 9; row++) {
+        for (int col = 0; col < 9; col++) {
+            Tile tile = new Tile(row, col);
+            tiles[row][col] = tile;
+            char ch = puzzle[row].charAt(col);
+
+            if (ch != '-') {
+                tile.setText(String.valueOf(ch));
                 tile.setEditable(false);
                 tile.setBackground(Color.LIGHT_GRAY);
                 tile.setForeground(Color.BLACK);
             } else {
-                String correct = String.valueOf(solution[row].charAt(column));
-                tile.makeEditable(correct);
+                tile.makeEditable(String.valueOf(solution[row].charAt(col)));
+                tile.setText(""); // Blank for user to fill
+                tile.setBackground(Color.WHITE);
             }
 
-            // Border setup
-            int top = (row % 3 == 0) ? 3 : 1;
-            int left = (column % 3 == 0) ? 3 : 1;
-            int bottom = (row == 8) ? 3 : 1;
-            int right = (column == 8) ? 3 : 1;
+            int top = (row % 3 == 0) ? 2 : 1;
+            int left = (col % 3 == 0) ? 2 : 1;
+            int bottom = (row == 8) ? 2 : 1;
+            int right = (col == 8) ? 2 : 1;
 
-            tile.setBorder(new MatteBorder(top, left, bottom, right, Color.BLACK));
+            tile.setBorder(new MatteBorder(top, left, bottom, right, Color.GRAY));
             boardPanel.add(tile);
         }
     }
+
+    boardPanel.revalidate();
+    boardPanel.repaint();
 }
 }
